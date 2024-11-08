@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $heading }}</title>
+    <link rel="icon" type="icon-x" href="{{ asset('storage/images/logo.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        *{
+            scroll-behavior: smooth;
+        }
+        .nav-bg{
+            background: red;
+        }
+
+        /* Amoeba Animation */
+        #hero:before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: pink;
+            border-radius: 50%;
+            opacity: 0.5;
+            z-index: 1;
+            animation: morph 8s infinite ease-in-out;
+            //filter: blur(20px);
+        }
+        #hero:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: dodgerblue;
+            border-radius: 50%;
+            opacity: 0.5;
+            z-index: 1;
+            animation: morph-after 8s infinite ease-in-out;
+            //filter: blur(20px);
+        }
+
+        /* Animation Keyframes */
+        @keyframes morph {
+            0% {
+                border-radius: 50% 50% 50% 50%;
+            }
+            25% {
+                border-radius: 50% 30% 50% 70%;
+            }
+            50% {
+                border-radius: 30% 50% 70% 50%;
+                                background: red;
+            }
+            75% {
+                border-radius: 50% 70% 30% 50%;
+            }
+            100% {
+                border-radius: 50% 50% 50% 50%;
+                                background: blue;
+            }
+        }
+         @keyframes morph-after {
+            0% {
+                border-radius: 50% 50% 50% 50%;
+            }
+            25% {
+                border-radius: 50% 30% 50% 70%;
+            }
+            50% {
+                border-radius: 30% 50% 70% 50%;
+                background: orange;
+            }
+            75% {
+                border-radius: 50% 70% 30% 50%;
+            }
+            100% {
+                border-radius: 50% 50% 50% 50%;
+                background: purple;
+            }
+        }
+
+
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: red;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: rise 10s infinite ease-in-out;
+        }
+
+        /* Animation Keyframes */
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-1000px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Random Sizes and Positions for Bubbles */
+        .bubble:nth-child(1) {
+            width: 50px;
+            height: 50px;
+            left: 10%;
+            animation-duration: 12s;
+        }
+        .bubble:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            left: 40%;
+            background: dodgerblue;
+            animation-duration: 15s;
+        }
+        .bubble:nth-child(3) {
+            width: 30px;
+            height: 30px;
+            left: 70%;
+            background: pink;
+            animation-duration: 10s;
+        }
+        .bubble:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            left: 80%;
+            animation-duration: 18s;
+            background: blue;
+        }
+        .bubble:nth-child(5) {
+            width: 80px;
+            height: 80px;
+            left: 25%;
+            background: orange;
+            animation-duration: 14s;
+        }
+        @media screen and (max-width: 768px){
+            #hero:before,
+            #hero:after{
+                width: 100px;
+                height: 100px;
+                margin-top: 5%;
+            }
+            .bubble:nth-child(4) {
+
+                width: 50px;
+                height: 50px;
+            }
+        }
+        .book {
+            transition: box-shadow 0.2s ease-in-out;
+        }
+        .book:hover{
+            box-shadow: 0 0 0 4px #93c5fd;
+        }
+        .download-but{
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            left: 90%;
+            top: 30%;
+            transition: 2s ease;
+        }
+        .book:hover .download-but{
+            display: initial;
+        }
+
+
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- Nav-->
+    <nav id="nav" class="w-full bg-transparent py-4 fixed top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="text-2xl font-bold text-blue-600">
+                <a href="#" class="flex items-center gap-4"><img src="{{ asset('storage/images/logo.png')}}" class="w-6 h-6 rounded-full"> Bookshub</a>
+            </div>
+
+            <!-- Nav Links -->
+            <div class="hidden md:flex space-x-6 text-gray-700">
+                <a href="/" class="hover:text-blue-600 font-poppins text-lg">Home</a>
+                <a href="/materials" class="hover:text-blue-600 font-poppins text-lg">Materials</a>
+                <a href="/about" class="hover:text-blue-600 font-poppins text-lg">About</a>
+                <a href="/blog" class="hover:text-blue-600 font-poppins text-lg">Blogs</a>
+                <a href="/contact" class="hover:text-blue-600 font-poppins text-lg">Contact</a>
+            </div>
+
+            <!-- Signup Button -->
+            <div class="hidden md:block">
+                <input type="search" name="search" id="search" class="mx-4 rounded-3xl focus:ring-2 focus:ring-blue-300 outline-none px-6 py-2 bg-white" placeholder="e.g gst 111">
+                <button class="bg-blue-600 font-bold text-white font-poppins px-3 py-1 sm:px-4 sm:py-2 rounded-full hover:bg-transparent border-2 border-blue-600 hover:border-blue-600 hover:text-blue-600">Signup </button>
+            </div>
+
+            <!-- Mobile Menu Icon -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-toggle">
+                    <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-100">Home</a>
+            <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-100">Materials</a>
+            <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-100">About</a>
+            <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-100">Blogs</a>
+            <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-100">Contact</a>
+        </div>
+    </nav>
+
+    <x-layout>
+    <x-slot:heading>
+        home
+    </x-slot:heading>
+
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+
+    <div class="bg-gray-50 py-20 " id="home" style="background:radial-gradient(circle, rgb(249 250 251), antiquewhite);">
+
+
+    <!-- Main Section -->
+    <div class="container mx-auto mt-0 px-2 py-16 md:px-16 md:py-2">
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            <!-- Text Section -->
+            <div class="text-center md:text-left md:w-1/2 space-y-6 px-2 md:px-8">
+                <h1 class="text-3xl md:text-4xl font-bold font-poppins text-gray-800">
+                    Share and Download materials for free
+                </h1>
+                <p class="text-lg text-gray-600 font-lato">
+                    Download materials from our rich community of contributors or be a contributor by uploading yours.
+                    <a href="#" class="text-blue-500">Upload and Share</a>
+                    with other student in UNIMAID.
+                </p>
+                <!-- News Letter Sub -->
+                <div class="mt-8 flex gap-4">
+                    <a href="/login"><button class="bg-blue-600 text-white py-3 px-6 rounded-2xl font-bold hover:bg-transparent border-2 border-blue-600 hover:text-blue-600">
+                        Login
+                    </button></a>
+                    <button class="bg-transparent py-3 px-6 rounded-2xl text-blue-600 font-bold  border-2 hover:border-blue-600">
+                        Browse
+                    </button>
+                </div>
+            </div>
+
+            <!-- Image Section -->
+            <div id="hero" class=" md:w-2/5 h-full relative">
+                <img src="{{ asset('storage/images/view-3d-young-school-student.png') }}" alt="student reading" class="w-full h-full z-50">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="materials" class="container flex flex-col gap-3 mx-auto p-6 pt-8 md:p-28">
+
+
+    <div class="container mx-auto">
+        <h1 class="text-2xl sm:text-4xl text-blue-600 font-bold mb-4">Materials</h1>
+        <div class="mb-4">
+            <span class="text-base sm:text-lg">Filter by category</span>
+        </div>
+        <div class="flex flex-wrap gap-2 mb-4">
+            <button class="bg-[#1a374d] text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full">All <i class="fas fa-times ml-2"></i></button>
+            <button class="border border-[#1a374d] text-[#1a374d] px-3 py-1 sm:px-4 sm:py-2 rounded-full">Popular </button>
+            <button class="border border-[#1a374d] text-[#1a374d] px-3 py-1 sm:px-4 sm:py-2 rounded-full">Latest </button>
+            <button class="border border-[#1a374d] text-[#1a374d] px-3 py-1 sm:px-4 sm:py-2 rounded-full">Gsts </button>
+            <button class="border border-[#1a374d] text-[#1a374d] px-3 py-1 sm:px-4 sm:py-2 rounded-full">Chems </button>
+            <button class="border border-[#1a374d] text-[#1a374d] px-3 py-1 sm:px-4 sm:py-2 rounded-full">Phys</button>
+            <button class="border border-[#1a374d] text-[#1a374d] px-3 py-1 sm:px-4 sm:py-2 rounded-full">Others</button>
+        </div>
+        <!--div class="flex justify-end">
+            <button class="border border-[#1a374d] text-[#1a374d] px-3 py-1 sm:px-4 sm:py-2 rounded-full">Recommended <i class="fas fa-chevron-down ml-2"></i></button>
+        </div-->
+    </div>
+
+    <div class="container mx-auto py-8 main-book-container">
+        <div class="space-x-0 book-container grid grid-cols-2 md:grid md:grid-cols-5 md:gap-4" style="">
+         <!-- Book 1 -->
+            <div class="text-center py-2 px-0 md:p-4 rounded-2xl relative book">
+                <img alt="Cover of Fahrenheit 451 by Ray Bradbury" class="rounded-2xl w-26 h-42 md:w-36 md:h-52 mx-auto contain" src="https://storage.googleapis.com/a1aa/image/Tg8YAkTHsyYKEp62JrauNB4Joe8RHGMEpyZzfbhvijfWSDOnA.jpg" width="100" style="aspect-ratio: 1/1.6;"/>
+                <h3 class="mt-2 text-sm font-semibold">Fahrenheit 451</h3>
+                <p class="text-xs text-gray-600">Ray Bradbury</p>
+                <div class="download-but" style="">
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">download</span></button>
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">visibility</span></button>
+                </div>
+            </div>
+
+            <!-- Book 2 -->
+                   <div class="text-center p-2 md:p-4 rounded-2xl relative book">
+                <img alt="Cover of Fahrenheit 451 by Ray Bradbury" class="rounded-2xl w-26 h-42 md:w-36 md:h-52 mx-auto contain" src="https://storage.googleapis.com/a1aa/image/Lg7oefcyadt7XEyPU7MemUCiPqG0ONcum4W7bf738ulhkGcOB.jpg" width="100" style="aspect-ratio: 1/1.6;"/>
+                <h3 class="mt-2 text-sm font-semibold">Fahrenheit 451</h3>
+                <p class="text-xs text-gray-600">Ray Bradbury</p>
+                <div class="download-but" style="">
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">download</span></button>
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">visibility</span></button>
+                </div>
+            </div>
+
+
+            <!-- Book 3 -->
+            <div class="text-center p-2 md:p-4 rounded-2xl relative book">
+                <img alt="Cover of Fahrenheit 451 by Ray Bradbury" class="rounded-2xl w-26 h-42 md:w-36 md:h-52 mx-auto contain" src="https://storage.googleapis.com/a1aa/image/Lg7oefcyadt7XEyPU7MemUCiPqG0ONcum4W7bf738ulhkGcOB.jpg" width="100" style="aspect-ratio: 1/1.6;"/>
+                <h3 class="mt-2 text-sm font-semibold">Fahrenheit 451</h3>
+                <p class="text-xs text-gray-600">Ray Bradbury</p>
+                <div class="download-but" style="">
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">download</span></button>
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">visibility</span></button>
+                </div>
+            </div>
+
+            <!-- Book 4 -->
+            <div class="text-center p-4 rounded-2xl relative book">
+                <img alt="Cover of Fahrenheit 451 by Ray Bradbury" class="rounded-2xl w-26 h-42 md:w-36 md:h-52 mx-auto contain" src="https://storage.googleapis.com/a1aa/image/m2SRtqEXxdKGEB5fgWYFpsjT2Cw16xdOEsMl7I5d1QBl0gzJA.jpg" width="100" style="aspect-ratio: 1/1.6;"/>
+                <h3 class="mt-2 text-sm font-semibold">Fahrenheit 451</h3>
+                <p class="text-xs text-gray-600">Ray Bradbury</p>
+                <div class="download-but" style="">
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">download</span></button>
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">visibility</span></button>
+                </div>
+            </div>
+            <!-- Book 5 -->
+            <div class="text-center p-4 rounded-2xl relative book">
+                <img alt="Cover of Fahrenheit 451 by Ray Bradbury" class="rounded-2xl w-26 h-42 md:w-36 md:h-52 mx-auto contain" src="https://storage.googleapis.com/a1aa/image/m2SRtqEXxdKGEB5fgWYFpsjT2Cw16xdOEsMl7I5d1QBl0gzJA.jpg" width="100" style="aspect-ratio: 1/1.6;"/>
+                <h3 class="mt-2 text-sm font-semibold">Fahrenheit 451</h3>
+                <p class="text-xs text-gray-600">Ray Bradbury</p>
+                <div class="download-but" style="">
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">download</span></button>
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">visibility</span></button>
+                </div>
+            </div>
+            <!-- Book 5 -->
+            <div class="text-center p-4 rounded-2xl relative book">
+                <img alt="Cover of Fahrenheit 451 by Ray Bradbury" class="rounded-2xl w-26 h-42 md:w-36 md:h-52 mx-auto contain" src="https://storage.googleapis.com/a1aa/image/m2SRtqEXxdKGEB5fgWYFpsjT2Cw16xdOEsMl7I5d1QBl0gzJA.jpg" width="100" style="aspect-ratio: 1/1.6;"/>
+                <h3 class="mt-2 text-sm font-semibold">Fahrenheit 451</h3>
+                <p class="text-xs text-gray-600">Ray Bradbury</p>
+                <div class="download-but" style="">
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">download</span></button>
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">visibility</span></button>
+                </div>
+            </div>
+            <!-- Book 5 -->
+            <div class="text-center p-4 rounded-2xl relative book">
+                <img alt="Cover of Fahrenheit 451 by Ray Bradbury" class="rounded-2xl w-26 h-42 md:w-36 md:h-52 mx-auto contain" src="https://storage.googleapis.com/a1aa/image/m2SRtqEXxdKGEB5fgWYFpsjT2Cw16xdOEsMl7I5d1QBl0gzJA.jpg" width="100" style="aspect-ratio: 1/1.6;"/>
+                <h3 class="mt-2 text-sm font-semibold">Fahrenheit 451</h3>
+                <p class="text-xs text-gray-600">Ray Bradbury</p>
+                <div class="download-but" style="">
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">download</span></button>
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">visibility</span></button>
+                </div>
+            </div>
+            <!-- Book 5 -->
+            <div class="text-center p-4 rounded-2xl relative book">
+                <img alt="Cover of Fahrenheit 451 by Ray Bradbury" class="rounded-2xl w-26 h-42 md:w-36 md:h-52 mx-auto contain" src="https://storage.googleapis.com/a1aa/image/m2SRtqEXxdKGEB5fgWYFpsjT2Cw16xdOEsMl7I5d1QBl0gzJA.jpg" width="100" style="aspect-ratio: 1/1.6;"/>
+                <h3 class="mt-2 text-sm font-semibold">Fahrenheit 451</h3>
+                <p class="text-xs text-gray-600">Ray Bradbury</p>
+                <div class="download-but" style="">
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">download</span></button>
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">visibility</span></button>
+                </div>
+            </div>
+            <!-- Book 5 -->
+            <div class="text-center p-4 rounded-2xl relative book">
+                <img alt="Cover of Fahrenheit 451 by Ray Bradbury" class="rounded-2xl w-26 h-42 md:w-36 md:h-52 mx-auto contain" src="https://storage.googleapis.com/a1aa/image/m2SRtqEXxdKGEB5fgWYFpsjT2Cw16xdOEsMl7I5d1QBl0gzJA.jpg" width="100" style="aspect-ratio: 1/1.6;"/>
+                <h3 class="mt-2 text-sm font-semibold">Fahrenheit 451</h3>
+                <p class="text-xs text-gray-600">Ray Bradbury</p>
+                <div class="download-but" style="">
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">download</span></button>
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">visibility</span></button>
+                </div>
+            </div>
+            <!-- Book 5 -->
+            <div class="text-center p-4 rounded-2xl relative book">
+                <img alt="Cover of Fahrenheit 451 by Ray Bradbury" class="rounded-2xl w-26 h-42 md:w-36 md:h-52 mx-auto contain" src="https://storage.googleapis.com/a1aa/image/m2SRtqEXxdKGEB5fgWYFpsjT2Cw16xdOEsMl7I5d1QBl0gzJA.jpg" width="100" style="aspect-ratio: 1/1.6;"/>
+                <h3 class="mt-2 text-sm font-semibold">Fahrenheit 451</h3>
+                <p class="text-xs text-gray-600">Ray Bradbury</p>
+                <div class="download-but" style="">
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">download</span></button>
+                    <button class="rounded-full w-10 h-10 bg-blue-300 flex justify-center items-center my-1"><span class="material-symbols-outlined">visibility</span></button>
+                </div>
+            </div>
+
+       </div>
+       <button class="my-6 bg-blue-600 font-bold text-white font-poppins px-3 py-1 sm:px-4 sm:py-2 rounded-full hover:bg-transparent border-2 border-blue-600 hover:border-blue-600 hover:text-blue-600">Load more </button>
+</div>
+
+<section class="mt-20">
+    <div class="container mx-auto px-0 md:px-6">
+        <div class="text-left mb-12">
+            <h2 class="text-3xl font-bold text-blue-600">About Us</h2>
+            <p class="mt-4 text-lg text-gray-600">We are a passionate team dedicated to delivering the best services to our clients.</p>
+        </div>
+        <div class="flex flex-col md:flex-row justify-center w-full mb-4 rounded-2xl">
+
+            <div class="w-full md:w-1/3 h-26 p-4 bg-white rounded-2xl mt-4 md:m-4 flex gap-3 p-4" style="box-shadow: rgba(0,0,0,0.1) 0px 6px 24px 0px;">
+                
+                <div class="w-64 h-full flex justify-center items-center h-full bg-green-100 rounded-lg">
+                    <img class="w-60 h-46" src="https://img.icons8.com/emoji/48/rocket-emji.png" alt="rocket-emji" style="filter: drop-shadow(10px 5px 2px #4444dd);">
+                </div>
+                <div class="">
+                    <h3 class="text-2xl font-semibold text-blue-600">Our Mission</h3>
+                    <p class="mt-2 text-gray-600 text-sm">To empower businesses with innovative solutions that drive success and growth.</p>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/3 h-26 p-4 bg-white rounded-2xl mt-4 md:m-4 flex gap-3 p-4" style="box-shadow: rgba(0,0,0,0.1) 0px 6px 24px 0px;">
+                <div class="w-64 h-full flex justify-center items-center h-full bg-orange-100 rounded-lg">
+                    <img class="w-60 h-46" src="https://img.icons8.com/emoji/48/rocket-emji.png" alt="rocket-emji" style="filter: drop-shadow(10px 5px 2px #4444dd);">
+                </div>
+                <div class="">
+                    <h3 class="text-2xl font-semibold text-blue-600">Our Vision</h3>
+                    <p class="mt-2 text-gray-600 text-sm">To be a leading provider of technology solutions, recognized for our commitment to quality and excellence.</p>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 h-26 p-4 bg-white rounded-2xl mt-4 md:m-4 flex gap-3 p-4" style="box-shadow: rgba(0,0,0,0.1) 0px 6px 24px 0px;">
+                
+                <div class="w-64 h-full flex justify-center items-center h-full bg-purple-100 rounded-lg">
+                    <img class="w-60 h-46" src="https://img.icons8.com/emoji/48/rocket-emji.png" alt="rocket-emji" style="filter: drop-shadow(10px 5px 2px #4444dd);"/>
+                    <a href="https://www.flaticon.com/free-icons/mission" title="mission icons"></a>
+                </div>
+
+                <div class="">
+                    <h3 class="text-2xl font-semibold text-blue-600">Our Values</h3>
+                    <p class="mt-2 text-gray-600 text-sm">Integrity, Innovation, and Customer Satisfaction are at the core of everything we do.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="bg-[#fff] flex flex-col justify-center items-center mt-10">
+    <div class="text-left m-12">
+        <p class="mt-4 text-lg text-gray-600">We are a passionate team dedicated to delivering the best services to our clients.</p>
+    </div>
+    <div class="flex flex-col md:flex-row gap-6 md:space-x-6 md:bg-none">
+        <!-- Card 1 -->
+        <div class="rounded-2xl p-6 flex flex-col items-center text-center w-full md:w-auto" style="box-shadow: rgba(0,0,0,0.1) 0px 6px 24px 0px;">
+            <div class="w-28 h-28 p-4 flex justify-center mb-4 rounded-2xl bg-[antiquewhite]">
+                
+                <img width="100" height="100" src="https://img.icons8.com/emoji/48/rocket-emji.png" alt="rocket-emji"/>
+                
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Create product roadmaps</h3>
+            <p class="text-gray-500 mb-4">Taking products from initial concept through user research, co-creation, and rapid prototyping</p>
+            <a href="#" class="text-green-500 font-semibold">Learn More</a>
+        </div>
+        <!-- Card 2 -->
+        <div class="rounded-2xl p-6 flex flex-col items-center text-center w-full md:w-auto" style="box-shadow: rgba(0,0,0,0.1) 0px 6px 24px 0px;">
+            <div class="w-28 h-28 p-4 flex justify-center mb-4 rounded-2xl bg-indigo-100">
+                <img width="100" height="100" src="https://img.icons8.com/emoji/48/rocket-emji.png" alt="rocket-emji"/>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Free to set up</h3>
+            <p class="text-gray-500 mb-4">Taking products from initial concept through user research, co-creation, and rapid prototyping</p>
+            <a href="#" class="text-green-500 font-semibold">Learn More</a>
+        </div>
+        <!-- Card 3 -->
+        <div class="rounded-2xl p-6 flex flex-col items-center text-center w-full md:w-auto" style="box-shadow: rgba(0,0,0,0.05) 0px 6px 24px 0px;">
+            <div class="w-28 h-28 p-4 flex justify-center mb-4 rounded-2xl bg-[#edeef7]">
+                <img width="100" height="100" src="https://img.icons8.com/emoji/48/rocket-emji.png" alt="rocket-emji"/>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Automatically updates</h3>
+            <p class="text-gray-500 mb-4">Taking products from initial concept through user research, co-creation, and rapid prototyping</p>
+            <a href="#" class="text-green-500 font-semibold">Learn More</a>
+        </div>
+    </div>
+
+
+<!--form>
+  <label class="block">
+    <span class="block text-sm font-medium text-slate-700">Email</span>
+    <input type="email" class="peer">
+    <p class="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
+      Please provide a valid email address.
+    </p>
+  </label>
+</form-->
+
+
+
+
+
+</x-layout>
+
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+
+$(window).on("scroll", function() {
+    console.log("Scrolled: " + $(window).scrollTop()); // Log the scroll position to the console
+    if ($(window).scrollTop() > 100) {
+        $("#nav").addClass("bg-white shadow-lg");
+        $("#search").addClass("ring-2 ring-blue-200");
+
+        //console.log("Background added");
+    } else {
+        $("#nav").removeClass("bg-white shadow-lg");
+        $("#search").removeClass("ring-2 ring-blue-200");
+        //console.log("Background removed");
+    }
+});
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+</body>
+</html>
